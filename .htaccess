@@ -1,0 +1,40 @@
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    RewriteBase /
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+</IfModule>
+
+
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+# BEGIN Expires-Headers
+<IfModule mod_expires.c>
+  <FilesMatch "\.(js|css)$">
+    ExpiresActive On
+    ExpiresDefault "access plus 1 weeks"
+  </FilesMatch>
+</IfModule>
+# END Expires-Headers
+
+# BEGIN Cache-Control-Headers
+<ifmodule mod_headers.c>
+<filesmatch "(gif|ico|jpeg|jpe|png|css|js)$">
+Header set Cache-Control "max-age=604800, public"
+</filesmatch>
+</ifmodule>
+# END Cache-Control-Headers
